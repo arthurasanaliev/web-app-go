@@ -21,3 +21,10 @@ func AddTwoValues(x, y int) int {
 func About(w http.ResponseWriter, r *http.Request) {
 }
 ```
+
+- errors module -> error handling
+- err := errors.New(message) -> declaring new error
+
+- hmtl/template module -> module for go-template files
+- parsed, _ := template.ParseFiles(file) -> recieves parsed file
+- err := parsed.Execute(w, nil) -> executes tmpl file
