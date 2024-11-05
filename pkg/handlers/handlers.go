@@ -1,12 +1,10 @@
-package main
+package handlers
 
 import (
     "fmt"
     "net/http"
     "html/template"
 )
-
-const portNumber = ":8080"
 
 // Home is the home page handler
 func Home(w http.ResponseWriter, r *http.Request) {
@@ -20,18 +18,10 @@ func About(w http.ResponseWriter, r *http.Request) {
 
 // renderTemplate renders go-template files
 func renderTemplate(w http.ResponseWriter, tmpl string) {
-    parsedTemplate, _ := template.ParseFiles("./templates/" + tmpl)
+    parsedTemplate, _ := template.ParseFiles("./templates/" + tmpl, "./templates/base.layout.tmpl")
     err := parsedTemplate.Execute(w, nil)
     if err != nil {
         fmt.Println("error parsing template:", err)
         return
     }
-}
-
-// main is the entry point of the app
-func main() {
-    http.HandleFunc("/", Home)
-    http.HandleFunc("/about", About)
-
-    _ = http.ListenAndServe(portNumber, nil)
 }

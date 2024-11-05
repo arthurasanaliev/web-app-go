@@ -28,3 +28,11 @@ func About(w http.ResponseWriter, r *http.Request) {
 - hmtl/template module -> module for go-template files
 - parsed, _ := template.ParseFiles(file) -> recieves parsed file
 - err := parsed.Execute(w, nil) -> executes tmpl file
+
+- go packages -> pkg/package/package.go (organizing code using packages)
+`import mod-name/package`
+
+### Nov 5
+- go-layouts -> templates that can be wrapped in single tmpl file and used later in different tmpl files
+- `{{block "name" .}} {{end}} -> {{define "name"}} {{end}}` -> block that can be modified in different files
+- `{{define "name"}} {{end}} -> {{template "name" .}}` -> whole template
