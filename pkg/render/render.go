@@ -1,24 +1,38 @@
 package render
 
 import (
-    "fmt"
-    "net/http"
     "html/template"
+    "path/filepath"
 )
 
-// RenderTemplateOnline renders go-template files online (w/o cache)
-func RenderTemplateOnline(w http.ResponseWriter, tmpl string) {
-    parsedTemplate, _ := template.ParseFiles("./templates/" + tmpl, "./templates/base.layout.tmpl")
-    err := parsedTemplate.Execute(w, nil)
+// RenderTemplate gets template cache
+func GetTemplateCache() (map[string]*template.Template, error) {
+    tmplCache := map[string]*template.Template{}
+
+    pages, err := filepath.Glob("./templates/*.page.tmpl")
     if err != nil {
-        fmt.Println("error parsing template:", err)
-        return
+        return tmplCache, err
     }
-}
 
-// TODO -- add cache for templates
+    layouts, err := filepath.Glob("./templates/*layout.tmpl")
+    if err != nil {
+        return tmplCache, err
+    }
+    
+    for _, page := range pages {
+        name := filepath.Base(page)
+        tmplSet, err := template.New(name).ParseFiles(page)
+        if err != nil {
+            return tmplCache, err
+        }
+        if len(layouts) > 0 {
+            tmplSet, err = tmplSet.ParseGlob("./templates/*layout.tmpl")
+            if err != nil {
+                return tmplCache, err
+            }
+        }
+        tmplCache[name] = tmplSet
+    }
 
-// RenderTemplate renders go-templates files if not found in cache
-func RenderTemplate(w http.ResponseWriter, tmpl string) {
-
+    return tmplCache, nil
 }
