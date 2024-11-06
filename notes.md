@@ -1,5 +1,5 @@
 ### Nov 4
-- net/http module -> internet stuff
+- net/http package -> internet stuff
 - http.HandleFunc(path, page handler function) -> page on path
 - w http.ResponseWriter -> to write on page (used to fmt.Fprintf(w, text))
 - r *http.Request -> 
@@ -22,10 +22,10 @@ func About(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
-- errors module -> error handling
+- errors package -> error handling
 - err := errors.New(message) -> declaring new error
 
-- hmtl/template module -> module for go-template files
+- hmtl/template package -> package for go-template files
 - parsed, _ := template.ParseFiles(file) -> recieves parsed file
 - err := parsed.Execute(w, nil) -> executes tmpl file
 
@@ -36,3 +36,7 @@ func About(w http.ResponseWriter, r *http.Request) {
 - go-layouts -> templates that can be wrapped in single tmpl file and used later in different tmpl files
 - `{{block "name" .}} {{end}} -> {{define "name"}} {{end}}` -> block that can be modified in different files
 - `{{define "name"}} {{end}} -> {{template "name" .}}` -> whole template
+
+- path/filepath package -> access to files, etc
+`pages, err := filepath.Glob(pattern)` -> returns slice of strings
+`name := filepath.Base(filePath)` -> returns base (everything after last /) name as string
