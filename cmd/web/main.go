@@ -1,26 +1,31 @@
 package main
 
 import (
-    "fmt"
+    "log"
     "net/http"
-    "github.com/arthurasanaliev/web-app-go/pkg/handlers"
     "github.com/arthurasanaliev/web-app-go/pkg/render"
+    "github.com/arthurasanaliev/web-app-go/pkg/config"
+    "github.com/arthurasanaliev/web-app-go/pkg/handlers"
 )
 
 const portNumber = ":8080"
 
 // main is the entry point of the app
 func main() {
-    tmplCache, err := render.GetTemplateCache()
+    tmplCache, err := render.CreateTemplateCache()
     if err != nil {
-        fmt.Println("cannot cache templates")
-        return
+        log.Fatal("could not creat template cache")
     }
 
-    handlers.CreateMap(tmplCache)
+    var app config.AppConfig
+    app.TempCache = tmplCache
+    render.SetApp(&app)
 
-    http.HandleFunc("/", handlers.Home)
-    http.HandleFunc("/about", handlers.About)
+    repo := handlers.NewRepo(&app)
+    handlers.SetRepo(repo)
+
+    http.HandleFunc("/", handlers.Repo.Home)
+    http.HandleFunc("/about", handlers.Repo.About)
 
     _ = http.ListenAndServe(portNumber, nil)
 }
