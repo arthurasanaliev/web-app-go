@@ -19,6 +19,7 @@ func main() {
 
     var app config.AppConfig
     app.TempCache = tmplCache
+    app.UseCache = true
     render.SetApp(&app)
 
     repo := handlers.NewRepo(&app)

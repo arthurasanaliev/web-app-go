@@ -40,3 +40,11 @@ func About(w http.ResponseWriter, r *http.Request) {
 - path/filepath package -> access to files, etc
 `pages, err := filepath.Glob(pattern)` -> returns slice of strings
 `name := filepath.Base(filePath)` -> returns base (everything after last /) name as string
+
+### Nov 6
+- Template Cache -> set (cache) of parsed .tmpl files
+
+### Nov 7
+- log package -> about logging like log.Fatal(mesage)
+- Repository struct -> data storage for handlers package
+- AppConfig struct/package -> config package that does not import anything from user-difened packages

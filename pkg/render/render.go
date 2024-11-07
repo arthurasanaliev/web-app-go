@@ -18,7 +18,12 @@ func SetApp(a *config.AppConfig) {
 
 // RenderTemplate renders template
 func RenderTemplate(w http.ResponseWriter, tmpl string) {
-    tmplCache := app.TempCache
+    var tmplCache map[string]*template.Template
+    if app.UseCache {
+        tmplCache = app.TempCache
+    } else {
+        tmplCache, _ = CreateTemplateCache()
+    }
 
     t, ok := tmplCache[tmpl]
     if !ok {
