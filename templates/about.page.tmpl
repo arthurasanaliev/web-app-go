@@ -1,6 +1,16 @@
 {{template "base" .}}
 
 {{define "body"}}
-<h1>Cache</h1>
-<p>Data from template data: {{index .StringMap "test"}}</p>
+<p>
+Message from `test` template data: {{index .StringMap "test"}}
+</p>
+
+<p>
+{{if ne (index .StringMap "remote_ip") ""}}
+The remoteIP is {{index .StringMap "remote_ip"}}.
+{{else}}
+Visit the <a href="/">Home Page</a> to set remoteIP.
+{{end}}
+</p>
+
 {{end}}
